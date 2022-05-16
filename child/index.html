@@ -1,0 +1,31 @@
+<input type="color" id="picker" />
+<input type="range" id="range" min="10" max="100" />
+<script>
+  const picker = document.querySelector("#picker");
+  const range = document.querySelector("#range")
+  const parentTarget = window.location === window.parent.location ? document.location.href : document.referrer;
+  picker.addEventListener("input", (event) => {
+    const data = {
+      selector: "#text", 
+      styles: {
+        color: event.target.value,
+      }
+    };
+    window.parent.postMessage(data, parentTarget);
+  });
+
+  range.addEventListener("input", (event) => {
+    const data = {selector: "#text", styles: {
+      fontSize: event.target.value + "px" 
+    }};
+    window.parent.postMessage(data, parentTarget);
+  });
+
+  window.addEventListener("message", (event) => {
+    if(event.origin+'/' !== parentTarget) return;
+    const data = event.data;
+    if(data.action === "LOAD") {
+      range.value = parseInt(data.payload.fontSize, 10);
+    }
+  });
+</script>
