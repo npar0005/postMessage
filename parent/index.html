@@ -1,7 +1,7 @@
 <p id="text">Text</p>
-<iframe src="http://127.0.0.1:57810/" id="child"></iframe>
+<iframe src="http://127.0.0.1:5500/child" id="child"></iframe>
 <script>
-   const childTarget = "http://127.0.0.1:57810"
+   const childTarget = "http://127.0.0.1:5500"
    window.addEventListener("message", event => {
       if(event.origin !== childTarget) return;
       const {selector, styles} = event.data;
@@ -18,7 +18,9 @@
    const txt = document.querySelector("#text");
    const fontSize = getComputedStyle(txt)["font-size"];
 
+   
    iframe.addEventListener("load", () => {
+      console.log(child.eval("picker"))
       child.postMessage({
          action: "LOAD",
          payload: {
