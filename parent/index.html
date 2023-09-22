@@ -18,9 +18,7 @@
    const txt = document.querySelector("#text");
    const fontSize = getComputedStyle(txt)["font-size"];
 
-   
    iframe.addEventListener("load", () => {
-      console.log(child.eval("picker"))
       child.postMessage({
          action: "LOAD",
          payload: {
